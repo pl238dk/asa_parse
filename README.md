@@ -2,9 +2,14 @@
 
 This is a framework that is able to parse a Cisco ASA firewall configuration into a Python dictionary.
 
-In one portion of the parsing, all object and object-groups are stored into a single dictionary `Config.object`.
+The main configuration is in `fw.py` but an alternative and slimmed down version is in `config.py`. I recommend `fw.py` with added features.
 
-In another portion of the parsing, all ACLs are stored in a single dictionary `Config.acl`.
+In different aspects of the parsing, information is stored in multiple dictionaries :
+- Network objects and object-groups
+- Service object and object-groups
+- ACL information
+- VPN information
+- NAT statements
 
 ## Getting Started
 
@@ -28,6 +33,11 @@ Then call the `parse_config()` function :
 ```
 
 ## Additional Features
+
+- Permission Check
+- VPN Retrieval (with crypto maps)
+
+### Permission Check
 
 A function `is_permit()` is capable of taking an input Source, Destination, and optional port (protocol/number format) and return whether or not the traffic is permitted.
 
@@ -77,6 +87,19 @@ If desired, the parsed configuration can be dumped to JSON by importing and exec
 
 >>>
 ```
+
+### VPN Retrieval
+
+Crypto maps and tunnel information can increase a configuration size, so a function was created to list all configured tunnels.
+
+One function `get_vpn_list()` outputs a list of VPNs configured, another function `get_vpn()` outputs detailed information only for that VPN.
+
+```
+>>> ip = '8.8.8.8'
+>>> f.get_vpn(ip)
+```
+
+Output shows peer IP and a configured PSK.
 
 ## Worthy mentionables
 
